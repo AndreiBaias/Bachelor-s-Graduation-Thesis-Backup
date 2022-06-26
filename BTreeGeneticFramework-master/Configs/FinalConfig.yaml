@@ -1,0 +1,79 @@
+behaviors:
+  TargetPractice:
+    trainer_type: ppo
+    max_steps: 50000000
+    hyperparameters:
+      # Hyperparameters common to PPO and SAC
+      batch_size: 256
+      buffer_size: 409600
+      learning_rate: 0.0001
+      learning_rate_schedule: linear
+      num_epoch: 3
+      lambd: 0.95
+    
+    network_settings:
+        hidden_units: 256
+        num_layers: 3
+      
+    reward_signals:
+      # environment reward (default)
+      extrinsic:
+        strength: 1.0
+        gamma: 1
+
+      # curiosity module
+      curiosity:
+        strength: 0.0003
+        gamma: 0.9
+        encoding_size: 64
+        learning_rate: 0.0001
+        
+environment_parameters:
+  tankPos:
+    curriculum:
+      - name: Lesson1 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: TargetPractice
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.3
+        value: 2.0
+      - name: Lesson2 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: TargetPractice
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.5
+        value: 2.0
+      - name: Lesson3 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: TargetPractice
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.5
+        value: 2.0  
+      - name: Lesson4 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: TargetPractice
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.7
+        value: 2.0 
+      - name: Lesson5 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: TargetPractice
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+        value: 2.0  
+

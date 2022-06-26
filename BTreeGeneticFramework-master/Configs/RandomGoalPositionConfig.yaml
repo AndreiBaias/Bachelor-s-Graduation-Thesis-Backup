@@ -1,0 +1,96 @@
+behaviors:
+  RandomGoalPosition:
+    trainer_type: ppo
+    max_steps: 50000000
+    hyperparameters:
+      # Hyperparameters common to PPO and SAC
+      batch_size: 128
+      buffer_size: 20480
+      learning_rate: 3.0e-4
+      learning_rate_schedule: constant
+      num_epoch: 3
+      lambd: 0.95
+    
+    network_settings:
+        hidden_units: 256
+        num_layers: 3
+      
+    reward_signals:
+      # environment reward (default)
+      extrinsic:
+        strength: 1.0
+        gamma: 0.995
+
+      # curiosity module
+      curiosity:
+        strength: 0.005
+        gamma: 0.995
+        encoding_size: 64
+        learning_rate: 3.0e-4
+        
+environment_parameters:
+  tankPos:
+    curriculum:
+      - name: Lesson1 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.8
+        value: 5.0
+      - name: Lesson2 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.8
+        value: 7.5
+      - name: Lesson3 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.8
+        value: 10  
+      - name: Lesson4 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.8
+        value: 12.5 
+      - name: Lesson5 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.8
+        value: 15  
+      - name: Lesson6 # This is the start of the second lesson
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          threshold: 0.8
+          require_reset: false
+        value: 17.5
+      - name: Lesson7 # This is the start of the second lesson
+        completion_criteria:
+          measure: reward
+          behavior: RandomGoalPosition
+          signal_smoothing: true
+          min_lesson_length: 300
+          threshold: 0.8
+          require_reset: false
+        value: 20  

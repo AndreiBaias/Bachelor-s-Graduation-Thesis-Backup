@@ -1,0 +1,126 @@
+behaviors:
+  CRTraining:
+    trainer_type: ppo
+    max_steps: 50000000
+    summary_freq: 16384
+    hyperparameters:
+      # Hyperparameters common to PPO and SAC
+      batch_size: 32
+      buffer_size: 1024
+      learning_rate: 0.00075
+      learning_rate_schedule: linear
+      num_epoch: 10
+      lambd: 0.95
+      beta: 0.0075
+      epsilon: 0.25
+    
+    network_settings:
+        hidden_units: 32
+        num_layers: 2
+      
+    reward_signals:
+      # environment reward (default)
+      extrinsic:
+        strength: 0.9
+        gamma: 0.8
+
+      # curiosity module
+      curiosity:
+        strength: 0.075
+        gamma: 0.8
+        encoding_size: 32
+        learning_rate: 0.0001
+        
+environment_parameters:
+  CRTraining:
+    curriculum:
+      - name: Lesson1_FixedRectSpawn # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.3
+        value: 0.0
+      - name: Lesson2 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.5
+        value: 1.0
+      - name: Lesson3 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.5
+        value: 2.0  
+      - name: Lesson4 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.7
+        value: 3.0 
+      - name: Lesson5 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+        value: 4.0  
+      - name: Lesson6_RandomRectSpawn # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.3
+        value: 5.0
+      - name: Lesson6 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.5
+        value: 6.0  
+      - name: Lesson7 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.5
+        value: 7.0 
+      - name: Lesson8 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.7
+        value: 8.0 
+      - name: Lesson9 # The '-' is important as this is a list
+        completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smoothing: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.8
+        value: 9.0 

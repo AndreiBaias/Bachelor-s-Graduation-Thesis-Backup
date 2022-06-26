@@ -1,0 +1,330 @@
+behaviors:
+  CRTraining:
+    trainer_type: sac
+    max_steps: 50000000
+    summary_freq: 50000
+    time_horizon: 1024
+    threaded: true
+    hyperparameters:
+      # Hyperparameters common to PPO and SAC
+      batch_size: 960 #32 * num_envs(30)
+      buffer_size: 102400
+      learning_rate: 0.001
+      learning_rate_schedule: constant
+      buffer_init_steps: 128
+      init_entcoef: 0.05
+      save_replay_buffer: true
+      tau: 0.0075
+      steps_per_update: 30 #default
+        
+    network_settings:
+        hidden_units: 44
+        num_layers: 2
+      
+    reward_signals:
+      # environment reward (default)
+      extrinsic:
+        strength: 1
+        gamma: 0.99
+
+      # curiosity module
+      curiosity:
+        strength: 0.0003
+        gamma: 0.9
+        encoding_size: 64
+        learning_rate: 0.001
+        
+environment_parameters:
+  CRTraining:
+    curriculum:
+    - name: Lesson1_FixedRectSpawn # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 0.0
+    - name: Lesson2 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 1.0
+    - name: Lesson3 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 2.0  
+    - name: Lesson4 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 3.0 
+    - name: Lesson5 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 4.0  
+    - name: Lesson6_RandomRectSpawn # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 5.0
+    - name: Lesson7 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 6.0  
+    - name: Lesson8 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 7.0 
+    - name: Lesson9 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 8.0 
+    - name: Lesson10 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 9.0 
+    - name: Lesson11_SquareBoundsSpawn # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 10.0 
+    - name: Lesson12 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 11.0 
+    - name: Lesson13 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 12.0 
+    - name: Lesson14 # The '-' is important as this is a list
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 13.0 
+    - name: Lesson15
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 14.0
+    - name: Lesson16_FullGameEnv  # Implement Cliff touching reward
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 15.0  
+    - name: Lesson17_GameEnvWithObjects1SpawnPointSetGoal #Implement EnvObject touching reward
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 16.0 
+    - name: Lesson18_GameEnvWithObjects1SpawnPointRandomGoal #Implement EnvObject touching reward
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smoothing: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 17.0 
+    - name: Lesson19
+      completion_criteria:
+        measure: reward
+        behavior: CRTraining
+        signal_smooting: true
+        min_lesson_length: 300
+        require_reset: false
+        threshold: 0.9
+      value: 18.0
+    - name: Lesson20
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 19.0
+    - name: Lesson21
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 20.0
+    - name: Lesson22
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 21.0
+    - name: Lesson23
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 22.0
+    - name: Lesson24
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 23.0
+    - name: Lesson25
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 24.0
+    - name: Lesson26
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 25.0
+    - name: Lesson27
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 26.0
+    - name: Lesson28
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 27.0
+    - name: Lesson29
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 28.0
+    - name: Lesson30
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 29.0
+    - name: Lesson31
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 30.0
+    - name: Lesson32
+      completion_criteria:
+          measure: reward
+          behavior: CRTraining
+          signal_smooting: true
+          min_lesson_length: 300
+          require_reset: false
+          threshold: 0.9
+      value: 31.0
+
+
+      ##stopped at lesson 16 -- buffer size too small
