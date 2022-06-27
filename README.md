@@ -19,7 +19,9 @@
 9. Train the agent following the instructions provided by the official ML-Agents documentation e.g.
 
 cd D:\Curriculum-Learning\BTreeGeneticFramework-master
+
 \venv\Scripts\activate
+
 mlagents-learn D:\Curriculum-Learning\BTreeGeneticFramework-master\Configs\ConfigSAC50.yaml --env="D:\Curriculum-Learning\BTreeGeneticFramework-master\BuiltGame\UniteBoston2015TrainingDay.exe" --num-envs=30 --run-id=SAC50 --no-graphics
 
 10. Use tensorboard for an overview of the training process
